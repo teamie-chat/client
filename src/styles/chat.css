@@ -1,44 +1,44 @@
 html.no-js noscript div {
-	margin-top: 1em;
+  margin-top: 1em;
 }
 
 .t-chat-container {
-	position: absolute;
-	bottom: 0;
-	padding-left: 0;
-	padding-right: 0;
+  position: absolute;
+  bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .t-chat-container .panel-thread {
-	margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .t-chat-container .panel-thread .panel-footer {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .t-chat-container .panel-thread .panel-body {
-	min-height: 100px;
+  min-height: 100px;
 }
 
 .t-chat-container .panel-thread .panel-footer textarea {
-	border-radius: 0px;
-	outline: none;
-	border: none;
-	resize: none;
+  border-radius: 0px;
+  outline: none;
+  border: none;
+  resize: none;
 }
 
 .t-chat-container .panel-container {
-	padding-left: 0;
+  padding-left: 0;
 }
 
 .t-chat-container .panel-container-minimized {
-	height: 175px;
+  height: 175px;
 }
 
 .t-chat-container .panel-container-minimized .panel-thread {
-	position: absolute;
-	width: 95%;
-	bottom: 0;
+  position: absolute;
+  width: 95%;
+  bottom: 0;
 }
