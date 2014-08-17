@@ -3,10 +3,12 @@ html.no-js noscript div {
 }
 
 .t-chat-container {
+/*  
   position: absolute;
   bottom: 0;
   padding-left: 0;
   padding-right: 0;
+  */
 }
 
 .t-chat-container .panel-thread {
@@ -19,7 +21,7 @@ html.no-js noscript div {
 }
 
 .t-chat-container .panel-thread .panel-body {
-  min-height: 100px;
+  min-height: 200px;
 }
 
 .t-chat-container .panel-thread .panel-footer input[type="text"] {
@@ -28,8 +30,20 @@ html.no-js noscript div {
   border: none;
 }
 
-.t-chat-container .panel-container {
-  padding-left: 0;
+.t-chat-container .panel-chat-widget .search-user-container,
+.t-chat-container .panel-chat-widget .list-people,
+.t-chat-container .panel-chat-widget .search-group-container,
+.t-chat-container .panel-chat-widget .list-user-groups,
+.t-chat-container .panel-chat-widget .list-archived-threads {
+  margin-top: 1em;
+}
+
+.t-chat-container .panel-thread-container {
+  width: 20%;
+}
+
+.t-chat-container .panel-chat-widget-container {
+  width: 40%;
 }
 
 .t-chat-container .panel-container-minimized {

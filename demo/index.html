@@ -31,12 +31,12 @@
       </div>
     </noscript>
 
-    <div class="t-chat-container container" data-ng-app="tChat">
+    <div class="t-chat-container container-fluid" data-ng-app="tChat">
       <div class="row">
-        <div class="col-xs-3"></div>
         <div data-t-chat-thread title="Tom"></div>
         <div data-t-chat-thread title="Dick, Harry"></div>
         <div data-t-chat-thread title="Classroom"></div>
+        <div data-t-chat-widget></div>
       </div>
     </div>
 
@@ -51,6 +51,11 @@
 
     <script src="src/scripts/app.js"></script>
     <script src="src/scripts/t-chat.directives/t-chat-thread.js"></script>
+    <script src="src/scripts/t-chat.directives/t-chat-widget.js"></script>
     <script src="src/scripts/t-chat.controllers/ThreadController.js"></script>
+    <script src="src/scripts/t-chat.controllers/UserListController.js"></script>
+    <script src="src/scripts/t-chat.controllers/GroupListController.js"></script>
+    <script src="src/scripts/t-chat.controllers/ArchiveController.js"></script>
+    <script src="src/scripts/t-chat.controllers/NotificationsController.js"></script>
   </body>
 </html>

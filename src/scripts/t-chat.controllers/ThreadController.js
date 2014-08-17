@@ -9,7 +9,7 @@ angular.module('tChat')
     // Model
     $scope.thread = {
       tid: '0',
-      type: 'direct'
+      type: 'direct' // Can be one of direct, group, multi.
     };
 
     // The different UI states that the thread can be in.
