@@ -3,12 +3,9 @@ html.no-js noscript div {
 }
 
 .t-chat-container {
-/*  
-  position: absolute;
-  bottom: 0;
-  padding-left: 0;
-  padding-right: 0;
-  */
+  position: fixed;
+  width: 100%;
+  bottom: -20px;
 }
 
 .t-chat-container .panel-thread {
@@ -38,6 +35,10 @@ html.no-js noscript div {
   margin-top: 1em;
 }
 
+.t-chat-container .panel-chat-widget {
+  height: 278px;
+}
+
 .t-chat-container .panel-thread-container {
   width: 20%;
 }
@@ -47,7 +48,7 @@ html.no-js noscript div {
 }
 
 .t-chat-container .panel-container-minimized {
-  height: 175px;
+  height: 278px;
 }
 
 .t-chat-container .panel-container-minimized .panel-thread {
