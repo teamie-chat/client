@@ -1,0 +1,35 @@
+{
+  "name": "teamie-chat",
+  "version": "2.0.0-dev",
+  "homepage": "https://github.com/teamie-chat/chat-client",
+  "authors": [
+    "Amarnath Ravikumar <amarnus@gmail.com>"
+  ],
+  "description": "AngularJS based chat client for Drupal sites.",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "chat",
+    "drupal",
+    "angular"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "underscore": "~1.6.0",
+    "angular-sanitize": "~1.2.22",
+    "jquery": "~2.1.1",
+    "socket.io-client": "~1.0.6",
+    "angular-chosen-localytics": "~1.0.6",
+    "bootstrap-css-only": "git://github.com/fyockm/bootstrap-css-only.git#~3.2.0",
+    "jquery-timeago": "~1.4.1"
+  }
+}
