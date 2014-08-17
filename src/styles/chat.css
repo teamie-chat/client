@@ -22,11 +22,10 @@ html.no-js noscript div {
   min-height: 100px;
 }
 
-.t-chat-container .panel-thread .panel-footer textarea {
+.t-chat-container .panel-thread .panel-footer input[type="text"] {
   border-radius: 0px;
   outline: none;
   border: none;
-  resize: none;
 }
 
 .t-chat-container .panel-container {

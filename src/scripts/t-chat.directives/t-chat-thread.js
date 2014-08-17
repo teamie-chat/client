@@ -3,12 +3,12 @@
 angular.module('tChat')
   .directive('tChatThread', function() {
     return {
-      restrict: 'E',
+      restrict: 'A',
       replace: true,
       scope: {
         title: '@'
       },
-      templateUrl: 'src/partials/directives/t-chat-thread.js',
+      templateUrl: 'src/partials/directives/t-chat-thread.html',
       controller: 'ThreadController'
     }
   });

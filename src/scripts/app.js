@@ -1,4 +1,6 @@
 'use strict';
 
 // Registering the Chat module.
-angular.module('tChat', []);
+angular.module('tChat', [
+  'ui.bootstrap'
+]);

@@ -5,11 +5,10 @@
   <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Teamie Chat Demo</title>
     <meta name="description" content="A sample web app to show the Teamie Chat client in action.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <base href="../"></base>
+    <base href="../">
     <link href="bower_components/bootstrap-css-only/css/bootstrap.css" type="text/css" rel="stylesheet">
     <link href="src/styles/chat.css" type="text/css" rel="stylesheet">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -32,12 +31,12 @@
       </div>
     </noscript>
 
-    <div class="t-chat-container container" ng-app="tChat">
+    <div class="t-chat-container container" data-ng-app="tChat">
       <div class="row">
         <div class="col-xs-3"></div>
-        <t-chat-thread title="Tom"></t-chat-thread>
-        <t-chat-thread title="Dick, Harry"></t-chat-thread>
-        <t-chat-thread title="Classroom"></t-chat-thread>
+        <div data-t-chat-thread title="Tom"></div>
+        <div data-t-chat-thread title="Dick, Harry"></div>
+        <div data-t-chat-thread title="Classroom"></div>
       </div>
     </div>
 
@@ -48,6 +47,7 @@
     <script src="bower_components/underscore/underscore.js"></script>
     <script src="bower_components/chosen/chosen.jquery.js"></script>
     <script src="bower_components/jquery-timeago/jquery.timeago.js"></script>
+    <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js"></script>
 
     <script src="src/scripts/app.js"></script>
     <script src="src/scripts/t-chat.directives/t-chat-thread.js"></script>

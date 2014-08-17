@@ -1,0 +1,51 @@
+<div class="col-xs-3 panel-container" data-ng-class="{
+    'panel-container-minimized': ui.minimize == 1
+  }" data-ng-if="!ui.close">
+  <div class="panel panel-thread panel-thread-{{ thread.type }} panel-default" data-ng-class="{
+      'panel-success': ui.highlight,
+    }" data-tid="{{ thread.tid }}">
+    <div class="panel-heading">
+      <div class="panel-heading-buttons pull-right">
+        <div class="btn-group" data-dropdown>
+          <button type="button" class="btn btn-xs btn-default btn-actions dropdown-toggle" id="t-chat-thread-settings-{{ ui.id }}" 
+          data-toggle="dropdown">
+            <i class="glyphicon glyphicon-cog"></i>
+          </button>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="t-chat-thread-settings-{{ ui.id }}">
+            <li role="presentation">
+              <a role="menuitem" tabindex="-1" href="#">
+                <i class="glyphicon glyphicon-user"></i> Add more people
+              </a>
+            </li>
+            <li role="presentation" data-ng-if="thread.type === 'multi'">
+              <a role="menuitem" tabindex="-1" href="#">
+                <i class="glyphicon glyphicon-off"></i> Leave
+              </a>
+            </li>
+          </ul>
+          <button type="button" class="btn btn-xs btn-default btn-resize" 
+            data-ng-click="ui.minimize = !ui.minimize">
+            <i class="glyphicon" data-ng-class="{ 
+              'glyphicon-minus': ui.minimize == 0,
+              'glyphicon-plus': ui.minimize == 1 }">
+            </i>
+          </button>
+          <button type="button" class="btn btn-xs btn-default btn-close" data-ng-click="ui.close = 1">
+            <i class="glyphicon glyphicon-remove"></i>
+          </button>
+        </div>
+      </div>  
+      <div class="panel-title" data-ng-if="title">
+        {{ title }} <span class="badge badge-danger"> 2 </span>
+      </div>
+    </div>
+    <div class="panel-content" data-ng-show="!ui.minimize">
+      <div class="panel-body">
+        {{ body }}
+      </div>
+      <div class="panel-footer">
+        <input type="text" class="form-control" name="chat">
+      </div>
+    </div>
+  </div>
+</div>
