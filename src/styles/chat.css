@@ -5,7 +5,7 @@ html.no-js noscript div {
 .t-chat-container {
   position: fixed;
   width: 100%;
-  bottom: -20px;
+  bottom: 0px;
 }
 
 .t-chat-container .panel-thread {
