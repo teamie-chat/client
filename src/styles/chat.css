@@ -45,6 +45,8 @@ html.no-js noscript div {
 
 .t-chat-container .panel-chat-widget-container {
   width: 40%;
+  position: absolute;
+  right: 0;
 }
 
 .t-chat-container .panel-container-minimized {

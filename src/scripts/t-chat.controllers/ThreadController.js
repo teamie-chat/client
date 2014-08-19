@@ -1,16 +1,10 @@
 'use strict';
 
 angular.module('tChat')
-  .controller('ThreadController', [ '$scope', function($scope) {
-
-    $scope.title = $scope.title || 'Kanika Jain';
-    $scope.body = '';
+  .controller('ThreadController', [ '$scope', 'ThreadService', function($scope, ThreadService) {
 
     // Model
-    $scope.thread = {
-      tid: '0',
-      type: 'direct' // Can be one of direct, group, multi.
-    };
+    $scope.thread = ThreadService.fetchThread($scope.tid);
 
     // The different UI states that the thread can be in.
     $scope.ui = {
@@ -20,9 +14,7 @@ angular.module('tChat')
     };
 
     // For development, highlight a random thread every time.
-    var randomNo = Math.floor(Math.random() * 10);
-    $scope.ui.highlight = (randomNo > 5);
-    $scope.ui.id = randomNo;
+    $scope.ui.highlight = (Math.floor(Math.random() * 10) > 5);
 
     $scope.$on('destroy', function() {
       // -- Stub -- //
