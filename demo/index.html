@@ -41,7 +41,7 @@
 
     <div class="container main clearfix">
       <div class="pull-left">
-        <h1>Vanilla Bootstrap</h1>
+        <h1><span>Vanilla Bootstrap</span> <small>Chat</small></h1>
         <p class="text-muted">A theme switch will take a few seconds to apply. 
           Check out <a href="http://bootswatch.com/" target="_blank">Bootswatch</a>.</p>
       </div>
@@ -50,6 +50,7 @@
         <select name="bootswatch-switcher" class="bootswatch-themes"></select>
       </div>
     </div>
+    <div class="divider"></div>
 
     <div class="t-chat-container container-fluid" data-ng-app="tChat">
       <div class="row">
@@ -86,7 +87,7 @@
         select.change(function() {
           var theme = themes[$(this).val()];
           $('link:first').attr('href', theme.css);
-          $('h1').text(theme.name);
+          $('h1 > span').text(theme.name);
         });
 
       }, 'json').fail(function(){
