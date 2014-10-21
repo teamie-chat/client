@@ -1,4 +1,5 @@
 angular.module('tChat').directive('tChatWidget', function() {
+  
   'use strict';
 
   return {
