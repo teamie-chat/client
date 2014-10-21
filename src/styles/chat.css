@@ -8,6 +8,10 @@ html.no-js noscript div {
   bottom: 0px;
 }
 
+.t-chat-container .panel-thread-container {
+  float: right;
+}
+
 .t-chat-container .panel-thread {
   margin-bottom: 0;
 }
@@ -39,22 +43,6 @@ html.no-js noscript div {
   height: 278px;
 }
 
-.t-chat-container .panel-thread-container {
-  width: 20%;
-}
-
-.t-chat-container .panel-chat-widget-container {
-  width: 40%;
-  position: absolute;
-  right: 0;
-}
-
 .t-chat-container .panel-container-minimized {
   height: 278px;
-}
-
-.t-chat-container .panel-container-minimized .panel-thread {
-  position: absolute;
-  width: 95%;
-  bottom: 0;
 }

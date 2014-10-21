@@ -1,10 +1,12 @@
-'use strict';
+angular.module('tChat').controller('GroupListController', [ '$scope', 'ThreadService',
+  function($scope, ThreadService) {
 
-angular.module('tChat')
-  .controller('GroupListController', [ '$scope', function($scope) {
+    'use strict';
+    
     $scope.data = {
       search: ''
     };
+    
     $scope.groups = [
       {
         uid: 1,
@@ -15,5 +17,10 @@ angular.module('tChat')
         name: 'English Class'
       }
     ];
+
+    $scope.chat = function(group) {
+      ThreadService.openThread('group', [ group ]);
+    };
     
-  }]);
+  }
+]);

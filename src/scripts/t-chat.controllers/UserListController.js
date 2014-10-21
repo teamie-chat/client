@@ -1,10 +1,12 @@
-'use strict';
+angular.module('tChat').controller('UserListController', [ '$scope', 'ThreadService',
+  function($scope, ThreadService) {
 
-angular.module('tChat')
-  .controller('UserListController', [ '$scope', function($scope) {
+    'use strict';
+
     $scope.data = {
       search: ''
     };
+    
     $scope.users = [
       {
         uid: 1,
@@ -15,5 +17,9 @@ angular.module('tChat')
         name: 'Alan Turing'
       }
     ];
-    
-  }]);
+
+    $scope.chat = function(user) {
+      ThreadService.openThread('direct', [ user ]);
+    };
+  }
+]);

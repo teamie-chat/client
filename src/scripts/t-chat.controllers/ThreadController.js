@@ -1,23 +1,42 @@
-'use strict';
-
 angular.module('tChat')
-  .controller('ThreadController', [ '$scope', 'ThreadService', function($scope, ThreadService) {
+  .controller('ThreadController', [ '$scope', '$log', 'ThreadService',
+    function($scope, $log, ThreadService) {
+    'use strict';
 
     // Model
-    $scope.thread = ThreadService.fetchThread($scope.tid);
+    // $scope.thread (passed in by the t-chat-threads directive.)
 
     // The different UI states that the thread can be in.
     $scope.ui = {
-      close: 0,
-      minimize: 0,
-      highlight: 0
+      minimized: 0,
+      highlighted: 0,
+      users: []
     };
 
-    // For development, highlight a random thread every time.
-    $scope.ui.highlight = (Math.floor(Math.random() * 10) > 5);
+    $scope.close = function() {
+      $log.log('close thread ' + $scope.thread.tid);
+      ThreadService.closeThread($scope.thread.tid);
+    };
 
-    $scope.$on('destroy', function() {
-      // -- Stub -- //
+    $scope.mute = function() {
+      // -- Stub --
+    };
+
+    $scope.addUsers = function(users) {
+      // -- Stub --
+    };
+
+    $scope.getMessages = function(message_id, count) {
+      count = count || 25;
+      // -- Stub --
+    };
+
+    $scope.removeUser = function() {
+      // -- Stub --
+    };
+
+    $scope.$on('$destroy', function() {
+      $log.log('thread ' + $scope.thread.tid + ' has been destroyed');
     });
 
   }]);
