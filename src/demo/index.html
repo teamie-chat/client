@@ -8,9 +8,12 @@
     <title>Teamie Chat Demo</title>
     <meta name="description" content="A sample web app to show the Teamie Chat client in action.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <base href="../">
-    <link href="bower_components/bootstrap-css-only/css/bootstrap.css" type="text/css" rel="stylesheet">
-    <link href="src/styles/chat.css" type="text/css" rel="stylesheet">
+    <!-- build:css(src/demo) vendor.css -->
+    <link href="../../bower_components/bootstrap-css-only/css/bootstrap.css" type="text/css" rel="stylesheet">
+    <!-- endbuild -->
+    <!-- build:css(src/demo) ../teamie-chat.css -->
+    <link href="../styles/chat.css" type="text/css" rel="stylesheet">
+    <!-- endbuild -->
     <style>
       .container.main {
         margin-top: 1em;
@@ -59,14 +62,17 @@
       </div>
     </div>
 
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/socket.io-client/socket.io.js"></script>
-    <script src="bower_components/underscore/underscore.js"></script>
-    <script src="bower_components/chosen/chosen.jquery.js"></script>
-    <script src="bower_components/jquery-timeago/jquery.timeago.js"></script>
-    <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js"></script>
+    <!-- build:js(src/demo) vendor.js -->
+    <script src="../../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../../bower_components/angular/angular.js"></script>
+    <script src="../../bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="../../bower_components/socket.io-client/socket.io.js"></script>
+    <script src="../../bower_components/underscore/underscore.js"></script>
+    <script src="../../bower_components/underscore.string/lib/underscore.string.js"></script>
+    <script src="../../bower_components/chosen/chosen.jquery.js"></script>
+    <script src="../../bower_components/jquery-timeago/jquery.timeago.js"></script>
+    <script src="../../bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js"></script>
+    <!-- endbuild -->
 
     <script>
     (function($) {
@@ -96,16 +102,17 @@
     })(jQuery);
     </script>
 
-    <script src="src/scripts/app.js"></script>
-    <script src="src/scripts/t-chat.directives/t-chat-threads.js"></script>
-    <script src="src/scripts/t-chat.directives/t-chat-thread.js"></script>
-    <script src="src/scripts/t-chat.directives/t-chat-widget.js"></script>
-    <script src="src/scripts/t-chat.controllers/ThreadManagerController.js"></script>
-    <script src="src/scripts/t-chat.controllers/ThreadController.js"></script>
-    <script src="src/scripts/t-chat.controllers/UserListController.js"></script>
-    <script src="src/scripts/t-chat.controllers/GroupListController.js"></script>
-    <script src="src/scripts/t-chat.controllers/ArchiveController.js"></script>
-    <script src="src/scripts/t-chat.controllers/NotificationsController.js"></script>
-    <script src="src/scripts/t-chat.services/ThreadService.js"></script>
+    <!-- build:js(src/demo) ../teamie-chat.js -->
+    <script src="../scripts/app.js"></script>
+    <script src="../scripts/directives/threads.js"></script>
+    <script src="../scripts/directives/thread.js"></script>
+    <script src="../scripts/directives/widget.js"></script>
+    <script src="../scripts/controllers/ThreadController.js"></script>
+    <script src="../scripts/controllers/UserListController.js"></script>
+    <script src="../scripts/controllers/GroupListController.js"></script>
+    <script src="../scripts/controllers/ThreadArchiveController.js"></script>
+    <script src="../scripts/filters/ArrayReverseFilter.js"></script>
+    <script src="../scripts/services/ThreadService.js"></script>
+    <!-- endbuild -->
   </body>
 </html>

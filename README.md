@@ -1,14 +1,34 @@
-Teamie Chat Client
-==================
+# Teamie Chat
 
-Contribute
-----------
+## Contribute
 
-If you would like to contribute to this project, you can set up your development machine by following the 
-instructions below:
+>You need to have `node` and `npm` installed.
 
-    git clone https://github.com/teamie-chat/client.git
-    cd client/
-    bower install
+### Development Environment
 
-Once that is done, run the demo (which is at `demo/index.html`) off any development web server that you use.
+```
+npm install -g bower
+git clone git@github.com:teamie-chat/client.git && cd client/
+bower install
+npm install
+```
+
+### Workflow
+
+>We use the [Gulp](http://gulpjs.com/) build tool.
+
+- To start the development server, do:
+
+  ```
+  gulp
+  ```
+
+  Now, navigate to `http://localhost:12044/src/demo/` in your browser to preview.
+
+- To build a new release, do:
+
+  ```
+  gulp build
+  ```
+
+  Now, navigate to `http://localhost:12045/release/demo/` in your browser to preview.

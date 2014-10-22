@@ -15,7 +15,7 @@
             ng-model="data.search"/>
           </div>
           <div class="list-people list-group">
-            <a href="" ng-repeat="user in users | filter:data.search" class="list-group-item" 
+            <a href="" ng-click="chat(user)" ng-repeat="user in users | filter:data.search" class="list-group-item" 
             data-uid="{{ user.uid }}">
               {{ user.name }}
             </a>
@@ -29,7 +29,7 @@
             ng-model="data.search"/>
           </div>
           <div class="list-user-groups list-group">
-            <a href="" ng-repeat="group in groups | filter:data.search" class="list-group-item" 
+            <a href="" ng-repeat="group in groups | filter:data.search" class="list-group-item" ng-click="chat(group)"
             data-uid="{{ group.gid }}">
               {{ group.name }}
             </a>

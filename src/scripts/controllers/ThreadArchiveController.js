@@ -1,7 +1,8 @@
-'use strict';
+angular.module('tChat').controller('ArchiveController', [ '$scope',
+  function($scope) {
 
-angular.module('tChat')
-  .controller('ArchiveController', [ '$scope', function($scope) {
+    'use strict';
+
     $scope.threads = [
       {
         tid: 1,
@@ -14,5 +15,7 @@ angular.module('tChat')
         lastMessage: 'See you. Lets catch up sometime.'
       }
     ];
-    
-  }]);
+
+  }
+
+]);
