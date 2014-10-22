@@ -1,6 +1,6 @@
 # Teamie Chat
 
-[Demo](http://teamie-chat.github.io/client/release/demo/) (Runs off the latest release)
+[Demo](http://teamie-chat.github.io/client/release/demo/)
 
 ## Contribute
 
@@ -39,4 +39,4 @@ npm install
   gulp build
   ```
 
-- To preview changes, you can use the demo application. If you have the development web server running, you can access the release version of the demo at [http://localhost:12044/release/demo/index.html] and the development version at [http://localhost:12044/src/demo/index.html].
+- To preview changes, you can use the demo application. If you have the development web server running, you can access the release version of the demo at [http://localhost:12044/release/demo/index.html](http://localhost:12044/release/demo/index.html) and the development version at [http://localhost:12044/src/demo/index.html](http://localhost:12044/src/demo/index.html).
