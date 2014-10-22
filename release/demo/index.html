@@ -8,12 +8,8 @@
     <title>Teamie Chat Demo</title>
     <meta name="description" content="A sample web app to show the Teamie Chat client in action.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- build:css(.) vendor.css -->
-    <link href="bower_components/bootstrap-css-only/css/bootstrap.css" type="text/css" rel="stylesheet">
-    <!-- endbuild -->
-    <!-- build:css(.) ../t-chat-client.css -->
-    <link href="src/styles/chat.css" type="text/css" rel="stylesheet">
-    <!-- endbuild -->
+    <link rel="stylesheet" href="vendor.css"/>
+    <link rel="stylesheet" href="../t-chat-client.css"/>
     <style>
       .container.main {
         margin-top: 1em;
@@ -62,17 +58,7 @@
       </div>
     </div>
 
-    <!-- build:js(.) vendor.js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/socket.io-client/socket.io.js"></script>
-    <script src="bower_components/underscore/underscore.js"></script>
-    <script src="bower_components/underscore.string/lib/underscore.string.js"></script>
-    <script src="bower_components/chosen/chosen.jquery.js"></script>
-    <script src="bower_components/jquery-timeago/jquery.timeago.js"></script>
-    <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js"></script>
-    <!-- endbuild -->
+    <script src="vendor.js"></script>
 
     <script>
     (function($) {
@@ -102,17 +88,6 @@
     })(jQuery);
     </script>
 
-    <!-- build:js(.) ../t-chat-client.js -->
-    <script src="src/scripts/app.js"></script>
-    <script src="src/scripts/directives/threads.js"></script>
-    <script src="src/scripts/directives/thread.js"></script>
-    <script src="src/scripts/directives/widget.js"></script>
-    <script src="src/scripts/controllers/ThreadController.js"></script>
-    <script src="src/scripts/controllers/UserListController.js"></script>
-    <script src="src/scripts/controllers/GroupListController.js"></script>
-    <script src="src/scripts/controllers/ThreadArchiveController.js"></script>
-    <script src="src/scripts/filters/ArrayReverseFilter.js"></script>
-    <script src="src/scripts/services/ThreadService.js"></script>
-    <!-- endbuild -->
+    <script src="../t-chat-client.js"></script>
   </body>
 </html>

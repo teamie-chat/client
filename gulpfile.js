@@ -4,6 +4,7 @@
   
   var gulp = require('gulp'),
     plugins = require('gulp-load-plugins')(),
+    del = require('del'),
     jshintStylish = require('jshint-stylish'),
     filesToWatch = [
       '.jshintrc',
@@ -11,7 +12,8 @@
       'src/**/*.html',
       'src/**/*.js',
       'src/**/*.css'
-    ];
+    ],
+    releaseDir = 'release';
 
   gulp.task('serve', function() {
     plugins.connect.server({
@@ -49,23 +51,54 @@
   });
 
   gulp.task('clean', function(cb) {
-    gulp.src('release', { read: false })
-      .pipe(plugins.clean())
-      .on('end', function() {
-          cb();
-      });
+    del([ 'release/**', 'release' ], cb);
   });
 
-  gulp.task('build', function() {
+  gulp.task('build:html', function() {
+    gulp.src([ 'src/**/*.html' ])
+      .pipe(plugins.angularTemplatecache('templates.js', {
+        root: 'src/',
+        module: 'tChat',
+        standalone: false
+      }))
+      .pipe(gulp.dest(releaseDir));
+  });
+
+  gulp.task('build:css-js', function(cb) {
     gulp.src([ 'demo.html' ])
+      .pipe(plugins.rename('index.html'))
       .pipe(plugins.usemin({
         js: [ plugins.uglify() ],
         css: [ plugins.minifyCss() ]
       }))
-      .pipe(gulp.dest('release'));
+      .pipe(gulp.dest(releaseDir + '/demo'))
+      .on('end', function() {
+        cb();
+      });
   });
 
-  gulp.task('release', [ 'clean', 'build' ]);
+  gulp.task('build:concat', function(cb) {
+    gulp.src([ 'release/*.js' ])
+      .pipe(plugins.concat('t-chat-client.js'))
+      .pipe(gulp.dest(releaseDir))
+      .on('end', function() {
+        cb();
+      });
+  });
+
+  gulp.task('build:rm', function(cb) {
+    del([ 'release/templates.js' ], cb);
+  });
+
+  gulp.task('build', function() {
+    plugins.runSequence(
+      'clean',
+      'build:html',
+      'build:css-js',
+      'build:concat',
+      'build:rm'
+    );
+  });
 
   gulp.task('default', [ 'lint:soft', 'cs', 'serve', 'watch' ]);
 

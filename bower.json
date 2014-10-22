@@ -17,6 +17,7 @@
   "license": "MIT",
   "private": true,
   "ignore": [
+    "release/demo",
     "demo.html",
     "node_modules",
     "bower_components",

@@ -11,7 +11,7 @@ angular.module('tChat').directive('tChatThreads', [ 'ThreadService',
       restrict: 'A',
       replace: true,
       scope: {},
-      templateUrl: 'src/partials/directives/t-chat-threads.html',
+      templateUrl: 'src/partials/t-chat-threads.html',
       link: postLink
     };
 
