@@ -9,29 +9,29 @@
         <div class="btn-group" data-dropdown>
           <button type="button" class="btn btn-xs btn-default btn-actions dropdown-toggle" id="t-chat-thread-settings-{{ thread.tid }}" 
           data-toggle="dropdown">
-            <i class="glyphicon glyphicon-cog"></i>
+            <i class="fa fa-cog"></i>
           </button>
           <ul class="dropdown-menu" role="menu" aria-labelledby="t-chat-thread-settings-{{ thread.tid }}">
             <li role="presentation">
               <a role="menuitem" tabindex="-1" href="#">
-                <i class="glyphicon glyphicon-user"></i> Add more people
+                <i class="fa fa-user"></i> Add more people
               </a>
             </li>
             <li role="presentation" data-ng-if="thread.type === 'multi'">
               <a role="menuitem" tabindex="-1" href="#">
-                <i class="glyphicon glyphicon-off"></i> Leave
+                <i class="fa fa-power-off"></i> Leave
               </a>
             </li>
           </ul>
           <button type="button" class="btn btn-xs btn-default btn-resize" 
             data-ng-click="ui.minimized = !ui.minimized">
-            <i class="glyphicon" data-ng-class="{ 
-              'glyphicon-minus': ui.minimized == 0,
-              'glyphicon-plus': ui.minimized == 1 }">
+            <i class="fa" data-ng-class="{ 
+              'fa-minus': ui.minimized == 0,
+              'fa-plus': ui.minimized == 1 }">
             </i>
           </button>
           <button type="button" class="btn btn-xs btn-default btn-close" data-ng-click="close()">
-            <i class="glyphicon glyphicon-remove"></i>
+            <i class="fa fa-remove"></i>
           </button>
         </div>
       </div>  

@@ -54,6 +54,12 @@
     del([ 'release/**', 'release' ], cb);
   });
 
+  gulp.task('build:fonts', function() {
+    gulp.src([ 'bower_components/**/*.{eot,svg,ttf,woff,otf}' ])
+      .pipe(plugins.flatten())
+      .pipe(gulp.dest(releaseDir + '/demo/fonts'));
+  });
+
   gulp.task('build:html', function() {
     gulp.src([ 'src/partials/*.html' ])
       .pipe(plugins.angularTemplatecache('templates.js', {
@@ -67,6 +73,9 @@
   gulp.task('build:css-js', function(cb) {
     gulp.src([ 'src/demo/index.html' ])
       .pipe(plugins.usemin({
+        css: [
+          plugins.replace('../fonts', './fonts')
+        ],
         html: [
           plugins.replace('teamie-chat.css', 'teamie-chat.min.css'),
           plugins.replace('teamie-chat.js', 'teamie-chat.min.js')
@@ -76,6 +85,14 @@
       .on('end', function() {
         cb();
       });
+  });
+
+  gulp.task('build:strip-sourcemaps', [ 'build:css-js' ], function() {
+    // Keeping this as a separate task instead of doing it in usemin because 
+    // gulp-replace says: cannot perform regex replacement on streams.
+    gulp.src([ 'release/demo/vendor.css' ])
+      .pipe(plugins.replace(/.*sourceMappingURL.*/g, ''))
+      .pipe(gulp.dest('release/demo'));
   });
 
   gulp.task('build:concat', function(cb) {
@@ -112,6 +129,8 @@
       'clean',
       'build:html',
       'build:css-js',
+      'build:strip-sourcemaps',
+      'build:fonts',
       'build:concat',
       [ 'build:minify-js', 'build:minify-css' ],
       'build:rm'

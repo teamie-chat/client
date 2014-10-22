@@ -22,9 +22,9 @@
           </div>
         </tab>
         <tab ng-controller="GroupListController">
-          <tab-heading><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;Groups</tab-heading>
+          <tab-heading><i class="fa fa-list-alt"></i>&nbsp;&nbsp;Groups</tab-heading>
           <div class="input-group search-group-container">
-            <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
+            <div class="input-group-addon"><i class="fa fa-search"></i></div>
             <input type="search" class="form-control input-sm" placeholder="Eg. Some class" 
             ng-model="data.search"/>
           </div>
@@ -35,8 +35,8 @@
             </a>
           </div>
         </tab>
-        <tab ng-controller="ArchiveController">
-          <tab-heading><i class="glyphicon glyphicon-hdd"></i>&nbsp;&nbsp;Archive</tab-heading>
+        <tab ng-controller="ThreadArchiveController">
+          <tab-heading><i class="fa fa-hdd-o"></i>&nbsp;&nbsp;Archive</tab-heading>
           <div class="list-archived-threads list-group">
             <a href="" ng-repeat="thread in threads | filter:data.search" class="list-group-item" 
             data-uid="{{ group.gid }}">

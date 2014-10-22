@@ -46,3 +46,7 @@ html.no-js noscript div {
 .t-chat-container .panel-container-minimized {
   height: 278px;
 }
+
+.nav-tabs > li {
+  cursor: pointer;
+}

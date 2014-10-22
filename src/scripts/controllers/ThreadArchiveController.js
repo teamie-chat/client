@@ -1,4 +1,4 @@
-angular.module('tChat').controller('ArchiveController', [ '$scope',
+angular.module('tChat').controller('ThreadArchiveController', [ '$scope',
   function($scope) {
 
     'use strict';
