@@ -79,7 +79,7 @@
 
   gulp.task('build:concat', function(cb) {
     gulp.src([ 'release/*.js' ])
-      .pipe(plugins.concat('t-chat-client.js'))
+      .pipe(plugins.concat('teamie-chat.js'))
       .pipe(gulp.dest(releaseDir))
       .on('end', function() {
         cb();
