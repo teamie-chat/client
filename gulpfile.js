@@ -55,9 +55,9 @@
   });
 
   gulp.task('build:html', function() {
-    gulp.src([ 'src/**/*.html' ])
+    gulp.src([ 'src/partials/*.html' ])
       .pipe(plugins.angularTemplatecache('templates.js', {
-        root: 'src/',
+        root: '/src/',
         module: 'tChat',
         standalone: false
       }))
