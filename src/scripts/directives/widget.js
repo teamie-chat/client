@@ -8,7 +8,7 @@ angular.module('tChat').directive('tChatWidget', function() {
     scope: {
       title: '@'
     },
-    templateUrl: 'src/partials/t-chat-widget.html'
+    templateUrl: '/src/partials/t-chat-widget.html'
   };
 
 });

@@ -8,7 +8,7 @@ angular.module('tChat').directive('tChatThread', [ function() {
     scope: {
       thread: '='
     },
-    templateUrl: 'src/partials/t-chat-thread.html',
+    templateUrl: '/src/partials/t-chat-thread.html',
     controller: 'ThreadController'
   };
 

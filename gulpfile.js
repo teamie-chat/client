@@ -65,11 +65,12 @@
   });
 
   gulp.task('build:css-js', function(cb) {
-    gulp.src([ 'demo.html' ])
-      .pipe(plugins.rename('index.html'))
+    gulp.src([ 'src/demo/index.html' ])
       .pipe(plugins.usemin({
-        js: [ plugins.uglify() ],
-        css: [ plugins.minifyCss() ]
+        html: [
+          plugins.replace('teamie-chat.css', 'teamie-chat.min.css'),
+          plugins.replace('teamie-chat.js', 'teamie-chat.min.js')
+        ]
       }))
       .pipe(gulp.dest(releaseDir + '/demo'))
       .on('end', function() {
@@ -86,6 +87,22 @@
       });
   });
 
+  gulp.task('build:minify-js', function(cb) {
+    gulp.src([ 'release/teamie-chat.js' ])
+      .pipe(plugins.rename('teamie-chat.min.js'))
+      .pipe(plugins.uglify())
+      .pipe(gulp.dest(releaseDir))
+      .on('end', cb);
+  });
+
+  gulp.task('build:minify-css', function(cb) {
+    gulp.src([ 'release/teamie-chat.css' ])
+      .pipe(plugins.rename('teamie-chat.min.css'))
+      .pipe(plugins.minifyCss())
+      .pipe(gulp.dest(releaseDir))
+      .on('end', cb);
+  });
+
   gulp.task('build:rm', function(cb) {
     del([ 'release/templates.js' ], cb);
   });
@@ -96,6 +113,7 @@
       'build:html',
       'build:css-js',
       'build:concat',
+      [ 'build:minify-js', 'build:minify-css' ],
       'build:rm'
     );
   });
