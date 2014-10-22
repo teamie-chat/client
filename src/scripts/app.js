@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  
+
   var app = angular.module('tChat', [
     'ui.bootstrap'
   ]);
@@ -9,7 +9,8 @@
 
     // -- Demo content -- //
 
-    var users, groups;
+    var users;
+    var groups;
 
     users = [
       { name: 'Tom' },
@@ -25,5 +26,5 @@
     // -- Demo content -- //
 
   }]);
-  
+
 })();

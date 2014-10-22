@@ -1,5 +1,5 @@
 angular.module('tChat').directive('tChatWidget', function() {
-  
+
   'use strict';
 
   return {
@@ -10,5 +10,5 @@ angular.module('tChat').directive('tChatWidget', function() {
     },
     templateUrl: 'src/partials/directives/t-chat-widget.html'
   };
-  
+
 });

@@ -1,17 +1,19 @@
-angular.module('tChat').directive('tChatThreads', [ 'ThreadService', function(ThreadService) {
+angular.module('tChat').directive('tChatThreads', [ 'ThreadService',
+  function(ThreadService) {
 
-  'use strict';
+    'use strict';
 
-  function postLink(scope, iElement, iAttrs) {
+    function postLink(scope) {
       scope.threads = ThreadService.getOpenedThreads;
+    }
+
+    return {
+      restrict: 'A',
+      replace: true,
+      scope: {},
+      templateUrl: 'src/partials/directives/t-chat-threads.html',
+      link: postLink
+    };
+
   }
-
-  return {
-    restrict: 'A',
-    replace: true,
-    scope: {},
-    templateUrl: 'src/partials/directives/t-chat-threads.html',
-    link: postLink
-  };
-
-}]);
+]);

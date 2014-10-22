@@ -1,4 +1,4 @@
-angular.module('tChat').directive('tChatThread', [ '$log', function($log) {
+angular.module('tChat').directive('tChatThread', [ function() {
 
   'use strict';
 

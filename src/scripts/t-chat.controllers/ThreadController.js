@@ -1,6 +1,6 @@
-angular.module('tChat')
-  .controller('ThreadController', [ '$scope', '$log', 'ThreadService',
-    function($scope, $log, ThreadService) {
+angular.module('tChat').controller('ThreadController', [ '$scope', '$log',
+  'ThreadService',
+  function($scope, $log, ThreadService) {
     'use strict';
 
     // Model
@@ -23,10 +23,11 @@ angular.module('tChat')
     };
 
     $scope.addUsers = function(users) {
+      users = users || [];
       // -- Stub --
     };
 
-    $scope.getMessages = function(message_id, count) {
+    $scope.getMessages = function(messageId, count) {
       count = count || 25;
       // -- Stub --
     };
@@ -39,4 +40,6 @@ angular.module('tChat')
       $log.log('thread ' + $scope.thread.tid + ' has been destroyed');
     });
 
-  }]);
+  }
+
+]);
