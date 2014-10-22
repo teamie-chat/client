@@ -17,13 +17,19 @@ npm install
 
 >We use the [Gulp](http://gulpjs.com/) build tool.
 
-- To start the development server, do:
+- To start the development environment, do:
 
   ```
   gulp
   ```
 
-  Now, navigate to `http://localhost:12044/src/demo/` in your browser to preview.
+  It starts a development web server with livereload support. Runs `jshint` and `jscs` on your source every time you save a file in `src/`.
+
+- To just start the development web server, do:
+
+  ```
+  gulp serve
+  ```
 
 - To build a new release, do:
 
@@ -31,4 +37,4 @@ npm install
   gulp build
   ```
 
-  Now, navigate to `http://localhost:12045/release/demo/` in your browser to preview.
+- To preview changes, you can use the demo application. If you have the development web server running, you can access the release version of the demo at [http://localhost:12044/release/demo/index.html] and the development version at [http://localhost:12044/src/demo/index.html].
