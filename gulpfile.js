@@ -57,7 +57,7 @@
   gulp.task('build:html', function() {
     gulp.src([ 'src/partials/*.html' ])
       .pipe(plugins.angularTemplatecache('templates.js', {
-        root: '/src/',
+        root: '/src/partials',
         module: 'tChat',
         standalone: false
       }))

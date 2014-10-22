@@ -1,5 +1,7 @@
 # Teamie Chat
 
+[Demo](http://teamie-chat.github.io/client/release/demo/) (Runs off the latest release)
+
 ## Contribute
 
 >You need to have `node` and `npm` installed.
