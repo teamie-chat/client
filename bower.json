@@ -34,6 +34,7 @@
     "jquery-timeago": "~1.4.1",
     "angular-ui-bootstrap-bower": "~0.11.0",
     "angular-socket-io": "~0.6.0",
-    "underscore.string": "~2.3.3"
+    "underscore.string": "~2.3.3",
+    "components-font-awesome": "~4.2.0"
   }
 }
