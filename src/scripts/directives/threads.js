@@ -1,10 +1,12 @@
 angular.module('tChat').directive('tChatThreads', [ 'ThreadService',
-  function(ThreadService) {
+  'VISIBLE_THREAD_COUNT',
+  function(ThreadService, VISIBLE_THREAD_COUNT) {
 
     'use strict';
 
     function postLink(scope) {
       scope.threads = ThreadService.getOpenedThreads;
+      scope.visibleThreadCount = VISIBLE_THREAD_COUNT;
     }
 
     return {

@@ -47,6 +47,14 @@ html.no-js noscript div {
   height: 278px;
 }
 
+.t-chat-color-green {
+  color: green;
+}
+
+.t-chat-color-grey {
+  color: lightGray;
+}
+
 .nav-tabs > li {
   cursor: pointer;
 }

@@ -35,6 +35,8 @@
     "angular-ui-bootstrap-bower": "~0.11.0",
     "angular-socket-io": "~0.6.0",
     "underscore.string": "~2.3.3",
-    "components-font-awesome": "~4.2.0"
+    "components-font-awesome": "~4.2.0",
+    "angular-link-focus": "~0.0.1",
+    "angular-tiny-eventemitter": "~0.1.0"
   }
 }

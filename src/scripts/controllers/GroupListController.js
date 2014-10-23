@@ -9,18 +9,20 @@ angular.module('tChat').controller('GroupListController',
       };
 
       $scope.groups = [
-        {
-          uid: 1,
-          name: 'Physics Class'
-        },
-        {
-          uid: 2,
-          name: 'English Class'
-        }
+        { gid: 1, name: 'Physics Class' },
+        { gid: 2, name: 'English Class' }
       ];
 
+      $scope.haveOpenThread = ThreadService.doesGroupHaveThread;
+
       $scope.chat = function(group) {
-        ThreadService.openThread('group', [ group ]);
+        var threadId = $scope.haveOpenThread(group);
+        if (!threadId) {
+          ThreadService.openThread('group', [ group ]);
+        }
+        else {
+          ThreadService.hoistThread(threadId);
+        }
       };
 
     }
