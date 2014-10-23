@@ -176,14 +176,19 @@ angular.module('tChat').factory('ThreadService', [ '$log',
       }
     }
 
-    function openThread(type, entities) {
+    function openThread(type, entities, setActive) {
+      if (angular.isUndefined(setActive)) {
+        setActive = true;
+      }
       var thread = createTempThread(type, entities);
       openThreads.push(thread);
       // We wait a tick as the thread scope has to be created, the
       // controller called and the event handler registered.
-      $timeout(function() {
-        setActiveThread(thread);
-      });
+      if (setActive) {
+        $timeout(function() {
+          setActiveThread(thread);
+        });
+      }
     }
 
     function closeThread(tid) {

@@ -21,11 +21,11 @@ angular.module('tChat').controller('ThreadController', [ '$scope', '$log',
     $scope.activeThread = ThreadService.getActiveThread;
 
     $scope.focus = function() {
-      $log.log( 'activating thread ' + $scope.thread.tid );
       if (!$scope.ui.active) {
+        $log.log( 'activating thread ' + $scope.thread.tid );
         $scope.ui.active = true;
+        ThreadService.setActiveThread($scope.thread);
       }
-      ThreadService.setActiveThread($scope.thread);
     };
 
     $scope.blur = function() {

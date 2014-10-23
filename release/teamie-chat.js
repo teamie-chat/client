@@ -23,9 +23,9 @@
     ];
     groups = [ { gid: 7, name: 'Classroom' } ];
 
-    ThreadService.openThread('direct', [ users[0] ]);
-    ThreadService.openThread('multi', [ users[1], users[2] ]);
-    ThreadService.openThread('group', [ groups[0] ]);
+    ThreadService.openThread('direct', [ users[0] ], false);
+    ThreadService.openThread('multi', [ users[1], users[2] ], false);
+    ThreadService.openThread('group', [ groups[0] ], false);
 
     // -- Demo content -- //
 
@@ -109,11 +109,11 @@ angular.module('tChat').controller('ThreadController', [ '$scope', '$log',
     $scope.activeThread = ThreadService.getActiveThread;
 
     $scope.focus = function() {
-      $log.log( 'activating thread ' + $scope.thread.tid );
       if (!$scope.ui.active) {
+        $log.log( 'activating thread ' + $scope.thread.tid );
         $scope.ui.active = true;
+        ThreadService.setActiveThread($scope.thread);
       }
-      ThreadService.setActiveThread($scope.thread);
     };
 
     $scope.blur = function() {
@@ -425,14 +425,19 @@ angular.module('tChat').factory('ThreadService', [ '$log',
       }
     }
 
-    function openThread(type, entities) {
+    function openThread(type, entities, setActive) {
+      if (angular.isUndefined(setActive)) {
+        setActive = true;
+      }
       var thread = createTempThread(type, entities);
       openThreads.push(thread);
       // We wait a tick as the thread scope has to be created, the
       // controller called and the event handler registered.
-      $timeout(function() {
-        setActiveThread(thread);
-      });
+      if (setActive) {
+        $timeout(function() {
+          setActiveThread(thread);
+        });
+      }
     }
 
     function closeThread(tid) {
@@ -502,6 +507,6 @@ angular.module('tChat').factory('ThreadService', [ '$log',
   }
 ]);
 
-angular.module("tChat").run(["$templateCache", function($templateCache) {$templateCache.put("/src/partials/t-chat-thread.html","<div class=\"col-xs-4 panel-thread-container\" data-ng-class=\"{\n    \'panel-container-minimized\': ui.minimized == 1\n  }\">\n  <div class=\"panel panel-thread panel-thread-{{ thread.type }} panel-default\" data-ng-class=\"{\n      \'panel-success\': ui.highlighted,\n    }\" data-tid=\"{{ thread.tid }}\">\n    <div class=\"panel-heading\">\n      <div class=\"panel-heading-buttons pull-right\">\n        <div class=\"btn-group\" data-dropdown>\n          <button type=\"button\" class=\"btn btn-xs btn-default btn-actions dropdown-toggle\" id=\"t-chat-thread-settings-{{ thread.tid }}\" \n          data-toggle=\"dropdown\">\n            <i class=\"fa fa-cog\"></i>\n          </button>\n          <ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"t-chat-thread-settings-{{ thread.tid }}\">\n            <li role=\"presentation\">\n              <a role=\"menuitem\" tabindex=\"-1\" href=\"#\">\n                <i class=\"fa fa-user\"></i> Add more people\n              </a>\n            </li>\n            <li role=\"presentation\" data-ng-if=\"thread.type === \'multi\'\">\n              <a role=\"menuitem\" tabindex=\"-1\" href=\"#\">\n                <i class=\"fa fa-power-off\"></i> Leave\n              </a>\n            </li>\n          </ul>\n          <button type=\"button\" class=\"btn btn-xs btn-default btn-resize\" \n            data-ng-click=\"ui.minimized = !ui.minimized\">\n            <i class=\"fa\" data-ng-class=\"{ \n              \'fa-minus\': ui.minimized == 0,\n              \'fa-plus\': ui.minimized == 1 }\">\n            </i>\n          </button>\n          <button type=\"button\" class=\"btn btn-xs btn-default btn-close\" data-ng-click=\"close()\">\n            <i class=\"fa fa-remove\"></i>\n          </button>\n        </div>\n      </div>  \n      <div class=\"panel-title\" data-ng-if=\"thread.title\">\n        <i class=\"fa fa-circle t-chat-color-green\"></i>&nbsp;&nbsp;{{ thread.title }}\n      </div>\n    </div>\n    <div class=\"panel-content\" data-ng-show=\"!ui.minimized\">\n      <div class=\"panel-body\"></div>\n      <div class=\"panel-footer\">\n        <input type=\"text\" class=\"form-control\" name=\"chat\" placeholder=\"Send a message.\" link-focus=\"ui.active\" ng-focus=\"focus()\" ng-blur=\"blur()\">\n      </div>\n    </div>\n  </div>\n</div>");
+angular.module("tChat").run(["$templateCache", function($templateCache) {$templateCache.put("/src/partials/t-chat-thread.html","<div class=\"col-xs-4 panel-thread-container\" data-ng-class=\"{\n    \'panel-container-minimized\': ui.minimized == 1\n  }\">\n  <div class=\"panel panel-thread panel-thread-{{ thread.type }} panel-default\" data-ng-class=\"{\n      \'panel-success\': ui.highlighted,\n    }\" data-tid=\"{{ thread.tid }}\">\n    <div class=\"panel-heading\">\n      <div class=\"panel-heading-buttons pull-right\">\n        <div class=\"btn-group\" data-dropdown>\n          <button type=\"button\" class=\"btn btn-xs btn-default btn-actions dropdown-toggle\" id=\"t-chat-thread-settings-{{ thread.tid }}\" \n          data-toggle=\"dropdown\">\n            <i class=\"fa fa-cog\"></i>\n          </button>\n          <ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"t-chat-thread-settings-{{ thread.tid }}\">\n            <li role=\"presentation\">\n              <a role=\"menuitem\" tabindex=\"-1\" href=\"#\">\n                <i class=\"fa fa-fw fa-user\"></i> Add more people\n              </a>\n            </li>\n            <li role=\"presentation\" data-ng-if=\"thread.type === \'multi\'\">\n              <a role=\"menuitem\" tabindex=\"-1\" href=\"#\">\n                <i class=\"fa fa-fw fa-power-off\"></i> Leave\n              </a>\n            </li>\n          </ul>\n          <button type=\"button\" class=\"btn btn-xs btn-default btn-resize\" \n            data-ng-click=\"ui.minimized = !ui.minimized\">\n            <i class=\"fa\" data-ng-class=\"{ \n              \'fa-minus\': ui.minimized == 0,\n              \'fa-plus\': ui.minimized == 1 }\">\n            </i>\n          </button>\n          <button type=\"button\" class=\"btn btn-xs btn-default btn-close\" data-ng-click=\"close()\">\n            <i class=\"fa fa-remove\"></i>\n          </button>\n        </div>\n      </div>  \n      <div class=\"panel-title\" data-ng-if=\"thread.title\">\n        <i class=\"fa fa-circle t-chat-color-green\"></i>&nbsp;&nbsp;{{ thread.title }}\n      </div>\n    </div>\n    <div class=\"panel-content\" data-ng-show=\"!ui.minimized\">\n      <div class=\"panel-body\"></div>\n      <div class=\"panel-footer\">\n        <input type=\"text\" class=\"form-control\" name=\"chat\" placeholder=\"Send a message.\" link-focus=\"ui.active\" ng-focus=\"focus()\" ng-blur=\"blur()\">\n      </div>\n    </div>\n  </div>\n</div>");
 $templateCache.put("/src/partials/t-chat-threads.html","<div class=\"col-xs-8\">\n  <div class=\"container-threads row\">\n    <div data-t-chat-thread\n         data-ng-repeat=\"t in threads() | reverse | limitTo:visibleThreadCount | reverse track by t.tid \"\n         data-thread=\"t\"\n         data-tid=\"{{ t.tid }}\">\n    </div>\n  </div>\n</div>");
 $templateCache.put("/src/partials/t-chat-widget.html","<div class=\"col-xs-4 panel-chat-widget-container\">\n  <div class=\"panel panel-default panel-chat-widget\">\n    <div class=\"panel-heading\">\n      <div class=\"panel-title\">\n        Teamie Chat <i class=\"fa fa-circle t-chat-color-green\"></i>\n      </div>\n    </div>\n    <div class=\"panel-body\">\n      <tabset justified=\"true\">\n        <tab ng-controller=\"UserListController\">\n          <tab-heading><i class=\"fa fa-user\"></i>&nbsp;&nbsp;People</tab-heading>\n          <div class=\"search-user-container input-group\">\n            <div class=\"input-group-addon\"><i class=\"fa fa-search\"></i></div>\n            <input type=\"search\" class=\"form-control input-sm search-user\" placeholder=\"Eg. John Doe\" \n            ng-model=\"data.search\"/>\n          </div>\n          <div class=\"list-people list-group\">\n            <a href=\"\" ng-click=\"chat(user)\" ng-repeat=\"user in users | filter:data.search\" class=\"list-group-item\" \n            data-uid=\"{{ user.uid }}\">\n              <i class=\"fa fa-circle t-chat-color-green\"></i>&nbsp;&nbsp;{{ user.name }} <i class=\"fa fa-comment\" ng-if=\"haveOpenThread(user)\"></i>\n            </a>\n          </div>\n        </tab>\n        <tab ng-controller=\"GroupListController\">\n          <tab-heading><i class=\"fa fa-group\"></i>&nbsp;&nbsp;Groups</tab-heading>\n          <div class=\"input-group search-group-container\">\n            <div class=\"input-group-addon\"><i class=\"fa fa-search\"></i></div>\n            <input type=\"search\" class=\"form-control input-sm\" placeholder=\"Eg. Some class\" \n            ng-model=\"data.search\"/>\n          </div>\n          <div class=\"list-user-groups list-group\">\n            <a href=\"\" ng-repeat=\"group in groups | filter:data.search\" class=\"list-group-item\" ng-click=\"chat(group)\"\n            data-uid=\"{{ group.gid }}\">\n              <i class=\"fa fa-circle t-chat-color-grey\"></i>&nbsp;&nbsp;{{ group.name }} <i class=\"fa fa-comment\" ng-if=\"haveOpenThread(group)\"></i>\n            </a>\n          </div>\n        </tab>\n<!--    <tab ng-controller=\"ThreadArchiveController\">\n          <tab-heading><i class=\"fa fa-hdd-o\"></i>&nbsp;&nbsp;Archive</tab-heading>\n          <div class=\"list-archived-threads list-group\">\n            <a href=\"\" ng-repeat=\"thread in threads | filter:data.search\" class=\"list-group-item\" \n            data-uid=\"{{ group.gid }}\">\n              <h4 class=\"list-group-item-heading\">{{ thread.title }}</h4>\n              <p class=\"text-muted list-group-item-text\">{{ thread.lastMessage }}</p>\n            </a>\n          </div>\n        </tab> -->\n        <!-- <tab heading=\"Notifications\" ng-controller=\"NotificationsController\"></tab> -->\n      </tabset>\n    </div>\n  </div>\n</div>");}]);

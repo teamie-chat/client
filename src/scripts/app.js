@@ -23,9 +23,9 @@
     ];
     groups = [ { gid: 7, name: 'Classroom' } ];
 
-    ThreadService.openThread('direct', [ users[0] ]);
-    ThreadService.openThread('multi', [ users[1], users[2] ]);
-    ThreadService.openThread('group', [ groups[0] ]);
+    ThreadService.openThread('direct', [ users[0] ], false);
+    ThreadService.openThread('multi', [ users[1], users[2] ], false);
+    ThreadService.openThread('group', [ groups[0] ], false);
 
     // -- Demo content -- //
 
