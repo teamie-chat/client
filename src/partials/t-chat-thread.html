@@ -14,35 +14,35 @@
           <ul class="dropdown-menu" role="menu" aria-labelledby="t-chat-thread-settings-{{ thread.tid }}">
             <li role="presentation">
               <a role="menuitem" tabindex="-1" href="#">
-                <i class="fa fa-user"></i> Add more people
+                <i class="fa fa-fw fa-user"></i> Add more people
               </a>
             </li>
             <li role="presentation" data-ng-if="thread.type === 'multi'">
               <a role="menuitem" tabindex="-1" href="#">
-                <i class="fa fa-power-off"></i> Leave
+                <i class="fa fa-fw fa-power-off"></i> Leave
               </a>
             </li>
           </ul>
-          <button type="button" class="btn btn-xs btn-default btn-resize" 
+<!--           <button type="button" class="btn btn-xs btn-default btn-resize" 
             data-ng-click="ui.minimized = !ui.minimized">
             <i class="fa" data-ng-class="{ 
               'fa-minus': ui.minimized == 0,
               'fa-plus': ui.minimized == 1 }">
             </i>
-          </button>
+          </button> -->
           <button type="button" class="btn btn-xs btn-default btn-close" data-ng-click="close()">
             <i class="fa fa-remove"></i>
           </button>
         </div>
       </div>  
-      <div class="panel-title" data-ng-if="thread.title">
-        {{ thread.title }} <span class="badge badge-danger"> 2 </span>
+      <div class="panel-title" data-ng-if="thread.title" ng-click="ui.minimized = !ui.minimized">
+        <i class="fa fa-circle t-chat-color-green"></i>&nbsp;&nbsp;{{ thread.title }}
       </div>
     </div>
     <div class="panel-content" data-ng-show="!ui.minimized">
       <div class="panel-body"></div>
       <div class="panel-footer">
-        <input type="text" class="form-control" name="chat" placeholder="Send a message.">
+        <input type="text" class="form-control" name="chat" placeholder="Send a message." link-focus="ui.active" ng-focus="focus()" ng-blur="blur()">
       </div>
     </div>
   </div>

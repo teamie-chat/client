@@ -19,7 +19,6 @@
   "undef": true,
   "unused": true,
   "strict": true,
-  "maxparams": 3,
   "maxdepth": 2,
   "maxlen": 100,
   "boss": true,
@@ -28,7 +27,8 @@
   "maxerr": 25,
   "globals": {
     "angular": false,
-    "_": false
+    "_": false,
+    "console": false
   },
   "browser": true
 }

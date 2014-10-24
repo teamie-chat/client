@@ -6,6 +6,11 @@ angular.module('tChat').controller('ThreadController', [ '$scope', '$log',
     // Model
     // $scope.thread (passed in by the t-chat-threads directive.)
 
+    function onActiveThreadReset(activeThread) {
+      $scope.ui.active =
+        ( activeThread && (activeThread.tid === $scope.thread.tid) );
+    }
+
     // The different UI states that the thread can be in.
     $scope.ui = {
       minimized: 0,
@@ -13,8 +18,22 @@ angular.module('tChat').controller('ThreadController', [ '$scope', '$log',
       users: []
     };
 
+    $scope.activeThread = ThreadService.getActiveThread;
+
+    $scope.focus = function() {
+      if (!$scope.ui.active) {
+        $log.log( 'activating thread ' + $scope.thread.tid );
+        $scope.ui.active = true;
+        ThreadService.setActiveThread($scope.thread);
+      }
+    };
+
+    $scope.blur = function() {
+      $scope.ui.active = false;
+    };
+
     $scope.close = function() {
-      $log.log('close thread ' + $scope.thread.tid);
+      $log.log( 'close thread ' + $scope.thread.tid );
       ThreadService.closeThread($scope.thread.tid);
     };
 
@@ -36,8 +55,10 @@ angular.module('tChat').controller('ThreadController', [ '$scope', '$log',
       // -- Stub --
     };
 
+    ThreadService.on('resetActiveThread', onActiveThreadReset);
+
     $scope.$on('$destroy', function() {
-      $log.log('thread ' + $scope.thread.tid + ' has been destroyed');
+      ThreadService.off('activeThread', onActiveThreadReset);
     });
 
   }
