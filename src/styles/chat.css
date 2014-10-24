@@ -2,6 +2,10 @@ html.no-js noscript div {
   margin-top: 1em;
 }
 
+html, body {
+  height: 100%;
+}
+
 .t-chat-container {
   position: fixed;
   width: 100%;
@@ -12,7 +16,8 @@ html.no-js noscript div {
   float: right;
 }
 
-.t-chat-container .panel-thread {
+.t-chat-container .panel-thread,
+.panel-chat-widget-container .panel-chat-widget {
   margin-bottom: 0;
 }
 
@@ -26,8 +31,7 @@ html.no-js noscript div {
 }
 
 .t-chat-container .panel-thread .panel-footer input[type="text"] {
-  border-radius: 0px;
-  outline: none;
+  border-radius: 0;
   border: none;
 }
 
@@ -47,6 +51,25 @@ html.no-js noscript div {
   height: 278px;
 }
 
+.t-chat-container .panel-container-minimized .panel-thread {
+  position: absolute;
+  width: 90%;
+  bottom: 0;
+}
+
+.t-chat-container .panel-thread .panel-heading {
+  padding: 0;
+}
+
+.t-chat-container .panel-thread .panel-title {
+  padding: 10px 15px;
+}
+
+.t-chat-container .panel-thread .panel-heading-buttons {
+  padding: 0;
+  margin: 10px 15px;
+}
+
 .t-chat-color-green {
   color: green;
 }
@@ -55,6 +78,6 @@ html.no-js noscript div {
   color: lightGray;
 }
 
-.nav-tabs > li {
+.nav-tabs > li, .panel-thread .panel-heading {
   cursor: pointer;
 }
