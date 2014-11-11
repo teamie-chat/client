@@ -1,5 +1,6 @@
 angular.module('tChat').directive('tChatMessages', [
-  function() {
+  'THREAD_MESSAGE_BLOCK_WINDOW_MS',
+  function(THREAD_MESSAGE_BLOCK_WINDOW_MS) {
 
     'use strict';
 
@@ -26,6 +27,7 @@ angular.module('tChat').directive('tChatMessages', [
         });
       });
 
+      scope.threadMessageBlockWindowMs = THREAD_MESSAGE_BLOCK_WINDOW_MS;
     }
 
     return {

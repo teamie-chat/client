@@ -4,10 +4,12 @@
   var app = angular.module('tChat', [
     'ui.bootstrap',
     'angular-link-focus',
-    'rt.eventemitter'
+    'rt.eventemitter',
+    'yaru22.angular-timeago'
   ]);
 
   app.constant('VISIBLE_THREAD_COUNT', 3);
+  app.constant('THREAD_MESSAGE_BLOCK_WINDOW_MS', 30000);
 
   app.run([ 'ThreadService', function(ThreadService) {
 

@@ -1,6 +1,6 @@
 <ul class="list-messages list-unstyled">
     <li class="list-item-message" data-mid="{{ message.mid }}" ng-repeat="message in thread.messages">
         {{ message.text }} 
-        <span class="text-muted">{{ message.timestamp | date:'short' }}</span>
+        <time class="text-muted" ng-if="$first || (message.timestamp - thread.messages[$index - 1].timestamp > threadMessageBlockWindowMs)">{{ message.timestamp | timeAgo }}</time>
     </li>
 </ul>
