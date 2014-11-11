@@ -13,14 +13,17 @@ angular.module('tChat').factory('ThreadService', [ '$log',
     var threadUsers = {};
     // Groups that have an open thread.
     var threadGroups = {};
-    var messageQueue = [];
 
     function enqueueMessage(tid, message) {
+      var thread = getOpenedThread(tid);
+      if (!thread) {
+        return;
+      }
       message.mid = getTempMid();
       var messagePacket = angular.copy(message);
       messagePacket.tid = tid;
-      messageQueue.push(messagePacket);
-      threadService.emit('thread.' + tid + '.message', message);
+      thread.messages.push(messagePacket);
+      threadService.emit('thread.' + thread.tid + '.message', message);
     }
 
     function getTempMid() {
@@ -85,6 +88,7 @@ angular.module('tChat').factory('ThreadService', [ '$log',
         tid: getTempTid(),
         title: generateTitle(type, entities),
         type: type,
+        messages: [],
         _state: 'open'
       };
       switch (type) {

@@ -6,8 +6,6 @@ angular.module('tChat').controller('ThreadController', [ '$scope', '$log',
     // Model
     // $scope.thread (passed in by the t-chat-threads directive.)
 
-    $scope.messages = [];
-
     function sendMessage(text) {
       ThreadService.sendMessage($scope.thread.tid, {
         text: text,
@@ -18,10 +16,6 @@ angular.module('tChat').controller('ThreadController', [ '$scope', '$log',
     function onActiveThreadReset(activeThread) {
       $scope.ui.active =
         ( activeThread && (activeThread.tid === $scope.thread.tid) );
-    }
-
-    function onMessageQueued(message) {
-      $scope.messages.push(message);
     }
 
     // The different UI states that the thread can be in.
@@ -77,8 +71,6 @@ angular.module('tChat').controller('ThreadController', [ '$scope', '$log',
     };
 
     ThreadService.on('resetActiveThread', onActiveThreadReset);
-    ThreadService.on('thread.' + $scope.thread.tid + '.message',
-      onMessageQueued);
 
     $scope.$on('$destroy', function() {
       ThreadService.off('activeThread', onActiveThreadReset);

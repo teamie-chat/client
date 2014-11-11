@@ -4,7 +4,8 @@ angular.module('tChat').directive('tChatMessages', [
     'use strict';
 
     function postLink(scope, iElement) {
-      if (!scope.messages) {
+      scope.thread = scope.thread || {};
+      if (!scope.thread.messages) {
         throw new Error('Cannot find messages in scope to render.');
       }
 
@@ -16,7 +17,7 @@ angular.module('tChat').directive('tChatMessages', [
         position: 'right'
       });
 
-      scope.$watchCollection('messages', function(newValue) {
+      scope.$watchCollection('thread.messages', function(newValue) {
         if (angular.isUndefined(newValue)) {
           return;
         }
