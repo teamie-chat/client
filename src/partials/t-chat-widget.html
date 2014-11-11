@@ -1,0 +1,52 @@
+<div class="col-xs-4 panel-chat-widget-container">
+  <div class="panel panel-default panel-chat-widget">
+    <div class="panel-heading">
+      <div class="panel-title">
+        Teamie Chat <i class="fa fa-circle t-chat-color-green"></i>
+      </div>
+    </div>
+    <div class="panel-body">
+      <tabset justified="true">
+        <tab ng-controller="UserListController">
+          <tab-heading><i class="fa fa-user"></i>&nbsp;&nbsp;People</tab-heading>
+          <div class="search-user-container input-group">
+            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+            <input type="search" class="form-control input-sm search-user" placeholder="Eg. John Doe" 
+            ng-model="data.search"/>
+          </div>
+          <div class="list-people list-group">
+            <a href="" ng-click="chat(user)" ng-repeat="user in users | filter:data.search" class="list-group-item" 
+            data-uid="{{ user.uid }}">
+              <i class="fa fa-circle t-chat-color-green"></i>&nbsp;&nbsp;{{ user.name }} <i class="fa fa-comment" ng-if="haveOpenThread(user)"></i>
+            </a>
+          </div>
+        </tab>
+        <tab ng-controller="GroupListController">
+          <tab-heading><i class="fa fa-group"></i>&nbsp;&nbsp;Groups</tab-heading>
+          <div class="input-group search-group-container">
+            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+            <input type="search" class="form-control input-sm" placeholder="Eg. Some class" 
+            ng-model="data.search"/>
+          </div>
+          <div class="list-user-groups list-group">
+            <a href="" ng-repeat="group in groups | filter:data.search" class="list-group-item" ng-click="chat(group)"
+            data-uid="{{ group.gid }}">
+              <i class="fa fa-circle t-chat-color-grey"></i>&nbsp;&nbsp;{{ group.name }} <i class="fa fa-comment" ng-if="haveOpenThread(group)"></i>
+            </a>
+          </div>
+        </tab>
+<!--    <tab ng-controller="ThreadArchiveController">
+          <tab-heading><i class="fa fa-hdd-o"></i>&nbsp;&nbsp;Archive</tab-heading>
+          <div class="list-archived-threads list-group">
+            <a href="" ng-repeat="thread in threads | filter:data.search" class="list-group-item" 
+            data-uid="{{ group.gid }}">
+              <h4 class="list-group-item-heading">{{ thread.title }}</h4>
+              <p class="text-muted list-group-item-text">{{ thread.lastMessage }}</p>
+            </a>
+          </div>
+        </tab> -->
+        <!-- <tab heading="Notifications" ng-controller="NotificationsController"></tab> -->
+      </tabset>
+    </div>
+  </div>
+</div>

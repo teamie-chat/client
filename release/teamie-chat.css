@@ -28,17 +28,6 @@ html, body {
 
 .t-chat-container .panel-thread .panel-body {
   min-height: 200px;
-  height: 200px;
-  padding: 0
-}
-
-.t-chat-container .panel-thread .panel-body .list-messages {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-.t-chat-container .panel-thread .panel-body .list-messages .list-item-message {
-  padding-left: 10px;
 }
 
 .t-chat-container .panel-thread .panel-footer input[type="text"] {

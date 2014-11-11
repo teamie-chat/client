@@ -1,0 +1,9 @@
+<div class="col-xs-8">
+  <div class="container-threads row">
+    <div data-t-chat-thread
+         data-ng-repeat="t in threads() | reverse | limitTo:visibleThreadCount | reverse track by t.tid "
+         data-thread="t"
+         data-tid="{{ t.tid }}">
+    </div>
+  </div>
+</div>

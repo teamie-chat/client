@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+  <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+  <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+  <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+  <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <title>Teamie Chat Demo</title>
+    <meta name="description" content="A sample web app to show the Teamie Chat client in action.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="vendor.css"/>
+    <link rel="stylesheet" href="../teamie-chat.min.css"/>
+    <style>
+      .container.main {
+        margin-top: 1em;
+      }
+      .bootswatch-themes-container {
+        margin-top: 3em;
+      }
+    </style>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. 
+        Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <noscript>
+      <div class="container">
+        <div class="alert alert-block alert-warning">
+          Teamie Chat requires Javascript to be enabled in your browser for it to work. Your browser either
+          does not support Javascript or you have it disabled. 
+          <a href="http://www.enable-javascript.com/" target="_blank">Learn</a> 
+          how you can change this for your browser or switch to a 
+          <a href="http://browsehappy.com" target="_blank">supported web browser</a> and try again.
+        </div>
+      </div>
+    </noscript>
+
+    <div class="container main clearfix">
+      <div class="pull-left">
+        <h1><span>Vanilla Bootstrap</span> <small>Chat</small></h1>
+        <p class="text-muted">A theme switch will take a few seconds to apply. 
+          Check out <a href="http://bootswatch.com/" target="_blank">Bootswatch</a>.</p>
+      </div>
+      <div class="pull-right bootswatch-themes-container">
+        <label for="bootswatch-switcher">Try another theme: </label>
+        <select name="bootswatch-switcher" class="bootswatch-themes"></select>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="t-chat-container container-fluid" data-ng-app="tChat">
+      <div class="row">
+        <div data-t-chat-threads></div>
+        <div data-t-chat-widget></div>
+      </div>
+    </div>
+
+    <script src="vendor.js"></script>
+
+    <script>
+    (function($) {
+      $.get('http://api.bootswatch.com/3/', function (data) {
+        var themes = data.themes;
+        themes.unshift({
+          name: 'Vanilla Bootstrap',
+          css: 'bower_components/bootstrap-css-only/css/bootstrap.css'
+        });
+        var select = $('select.bootswatch-themes');
+        select.show();
+        themes.forEach(function(value, index) {
+          select.append($('<option />')
+            .val(index)
+            .text(value.name));
+        });
+        
+        select.change(function() {
+          var theme = themes[$(this).val()];
+          $('link:first').attr('href', theme.css);
+          $('h1 > span').text(theme.name);
+        });
+
+      }, 'json').fail(function(){
+        // -- @todo Handle error -- //
+      });
+    })(jQuery);
+    </script>
+
+    <script src="../teamie-chat.min.js"></script>
+  </body>
+</html>
