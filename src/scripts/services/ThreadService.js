@@ -5,6 +5,7 @@ angular.module('tChat').factory('ThreadService', [ '$log',
     'use strict';
 
     var fakeTid = 0;
+    var fakeMid = 0;
     var threadService;
     var openThreads = [];
     var activeThread;
@@ -12,9 +13,22 @@ angular.module('tChat').factory('ThreadService', [ '$log',
     var threadUsers = {};
     // Groups that have an open thread.
     var threadGroups = {};
+    var messageQueue = [];
+
+    function enqueueMessage(tid, message) {
+      message.mid = getTempMid();
+      var messagePacket = angular.copy(message);
+      messagePacket.tid = tid;
+      messageQueue.push(messagePacket);
+      threadService.emit('thread.' + tid + '.message', message);
+    }
+
+    function getTempMid() {
+      return 'message.' + (++fakeMid);
+    }
 
     function getTempTid() {
-      return 'temp.' + (++fakeTid);
+      return 'thread.' + (++fakeTid);
     }
 
     function getOpenedThread(tid) {
@@ -234,6 +248,10 @@ angular.module('tChat').factory('ThreadService', [ '$log',
       }
     }
 
+    function sendMessage(tid, message) {
+      enqueueMessage(tid, message);
+    }
+
     // -- Debugging -- //
     if (Object.observe) {
       Object.observe(openThreads, function() {
@@ -251,6 +269,7 @@ angular.module('tChat').factory('ThreadService', [ '$log',
     ThreadService.prototype.getOpenedThreads = getOpenedThreads;
     ThreadService.prototype.doesUserHaveThread = doesUserHaveThread;
     ThreadService.prototype.doesGroupHaveThread = doesGroupHaveThread;
+    ThreadService.prototype.sendMessage = sendMessage;
 
     threadService = new ThreadService();
     eventEmitter.inject(ThreadService);
