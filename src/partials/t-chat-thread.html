@@ -41,7 +41,7 @@
     </div>
     <div class="panel-content" data-ng-show="!ui.minimized">
       <div class="panel-body">
-        <t-chat-messages data-thread="thread"></t-chat-messages>
+        <t-chat-messages data-thread="thread" data-messages="messages"></t-chat-messages>
       </div>
       <div class="panel-footer">
         <input type="text" class="form-control" name="chat" placeholder="Send a message." ng-model="ui.chat" link-focus="ui.active" ng-focus="focus()" ng-blur="blur()" ng-keyup="onKeyup($event)" tabindex="{{ $parent.visibleThreadCount - $parent.$index }}">

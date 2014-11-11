@@ -70,7 +70,7 @@ angular.module('tChat').controller('ThreadController', [ '$scope', '$log',
     };
 
     $scope.onKeyup = function($event) {
-      if ($event.keyCode === 13) {
+      if (($event.keyCode === 13) && !!$scope.ui.chat) {
         sendMessage($scope.ui.chat);
         $scope.ui.chat = null;
       }
