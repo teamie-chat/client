@@ -55,6 +55,45 @@ angular.module('tChat').directive('tChatThreads', [ 'ThreadService',
   }
 ]);
 
+angular.module('tChat').directive('tChatMessages', [
+  function() {
+
+    'use strict';
+
+    function postLink(scope, iElement, iAttrs) {
+      if (!scope.messages) {
+        throw new Error('Cannot find messages in scope to render.');
+      }
+
+      iElement.slimScroll({
+        height: 'auto',
+        allowPageScroll: false,
+        start: 'bottom',
+        alwaysVisible: false,
+        position: 'right'
+      });
+
+      scope.$watchCollection('messages', function(newValue) {
+        if (angular.isUndefined(newValue)) {
+          return;
+        }
+        iElement.slimScroll().slimScroll({
+          scrollTo: iElement.prop('scrollHeight')
+        });
+      });
+
+    }
+
+    return {
+      restrict: 'E',
+      replace: true,
+      templateUrl: '/src/partials/t-chat-messages.html',
+      link: postLink
+    };
+
+  }
+]);
+
 angular.module('tChat').directive('tChatThread', [ function() {
 
   'use strict';
@@ -94,16 +133,30 @@ angular.module('tChat').controller('ThreadController', [ '$scope', '$log',
     // Model
     // $scope.thread (passed in by the t-chat-threads directive.)
 
+    $scope.messages = [];
+
+    function sendMessage(text) {
+      ThreadService.sendMessage($scope.thread.tid, {
+        text: text,
+        timestamp: new Date().getTime()
+      });
+    }
+
     function onActiveThreadReset(activeThread) {
       $scope.ui.active =
         ( activeThread && (activeThread.tid === $scope.thread.tid) );
+    }
+
+    function onMessageQueued(message) {
+      $scope.messages.push(message);
     }
 
     // The different UI states that the thread can be in.
     $scope.ui = {
       minimized: 0,
       highlighted: 0,
-      users: []
+      users: [],
+      chat: null
     };
 
     $scope.activeThread = ThreadService.getActiveThread;
@@ -143,10 +196,19 @@ angular.module('tChat').controller('ThreadController', [ '$scope', '$log',
       // -- Stub --
     };
 
+    $scope.onKeyup = function($event) {
+      if (($event.keyCode === 13) && !!$scope.ui.chat) {
+        sendMessage($scope.ui.chat);
+        $scope.ui.chat = null;
+      }
+    };
+
     ThreadService.on('resetActiveThread', onActiveThreadReset);
+    ThreadService.on('thread.' + $scope.thread.tid + '.message', onMessageQueued);
 
     $scope.$on('$destroy', function() {
       ThreadService.off('activeThread', onActiveThreadReset);
+      ThreadService.off('thread.' + $scope.thread.tid + '.message');
     });
 
   }
@@ -254,6 +316,7 @@ angular.module('tChat').factory('ThreadService', [ '$log',
     'use strict';
 
     var fakeTid = 0;
+    var fakeMid = 0;
     var threadService;
     var openThreads = [];
     var activeThread;
@@ -261,9 +324,22 @@ angular.module('tChat').factory('ThreadService', [ '$log',
     var threadUsers = {};
     // Groups that have an open thread.
     var threadGroups = {};
+    var messageQueue = [];
+
+    function enqueueMessage(tid, message) {
+      message.mid = getTempMid();
+      var messagePacket = angular.copy(message);
+      messagePacket.tid = tid;
+      messageQueue.push(messagePacket);
+      threadService.emit('thread.' + tid + '.message', message);
+    }
+
+    function getTempMid() {
+      return 'message.' + (++fakeMid);
+    }
 
     function getTempTid() {
-      return 'temp.' + (++fakeTid);
+      return 'thread.' + (++fakeTid);
     }
 
     function getOpenedThread(tid) {
@@ -483,6 +559,10 @@ angular.module('tChat').factory('ThreadService', [ '$log',
       }
     }
 
+    function sendMessage(tid, message) {
+      enqueueMessage(tid, message);
+    }
+
     // -- Debugging -- //
     if (Object.observe) {
       Object.observe(openThreads, function() {
@@ -500,6 +580,7 @@ angular.module('tChat').factory('ThreadService', [ '$log',
     ThreadService.prototype.getOpenedThreads = getOpenedThreads;
     ThreadService.prototype.doesUserHaveThread = doesUserHaveThread;
     ThreadService.prototype.doesGroupHaveThread = doesGroupHaveThread;
+    ThreadService.prototype.sendMessage = sendMessage;
 
     threadService = new ThreadService();
     eventEmitter.inject(ThreadService);
@@ -507,6 +588,7 @@ angular.module('tChat').factory('ThreadService', [ '$log',
   }
 ]);
 
-angular.module("tChat").run(["$templateCache", function($templateCache) {$templateCache.put("/src/partials/t-chat-thread.html","<div class=\"col-xs-4 panel-thread-container\" data-ng-class=\"{\n    \'panel-container-minimized\': ui.minimized == 1\n  }\">\n  <div class=\"panel panel-thread panel-thread-{{ thread.type }} panel-default\" data-ng-class=\"{\n      \'panel-success\': ui.highlighted,\n    }\" data-tid=\"{{ thread.tid }}\">\n    <div class=\"panel-heading\">\n      <div class=\"panel-heading-buttons pull-right\">\n        <div class=\"btn-group\" data-dropdown>\n          <button type=\"button\" class=\"btn btn-xs btn-default btn-actions dropdown-toggle\" id=\"t-chat-thread-settings-{{ thread.tid }}\" \n          data-toggle=\"dropdown\">\n            <i class=\"fa fa-cog\"></i>\n          </button>\n          <ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"t-chat-thread-settings-{{ thread.tid }}\">\n            <li role=\"presentation\">\n              <a role=\"menuitem\" tabindex=\"-1\" href=\"#\">\n                <i class=\"fa fa-fw fa-user\"></i> Add more people\n              </a>\n            </li>\n            <li role=\"presentation\" data-ng-if=\"thread.type === \'multi\'\">\n              <a role=\"menuitem\" tabindex=\"-1\" href=\"#\">\n                <i class=\"fa fa-fw fa-power-off\"></i> Leave\n              </a>\n            </li>\n          </ul>\n<!--           <button type=\"button\" class=\"btn btn-xs btn-default btn-resize\" \n            data-ng-click=\"ui.minimized = !ui.minimized\">\n            <i class=\"fa\" data-ng-class=\"{ \n              \'fa-minus\': ui.minimized == 0,\n              \'fa-plus\': ui.minimized == 1 }\">\n            </i>\n          </button> -->\n          <button type=\"button\" class=\"btn btn-xs btn-default btn-close\" data-ng-click=\"close()\">\n            <i class=\"fa fa-remove\"></i>\n          </button>\n        </div>\n      </div>  \n      <div class=\"panel-title\" data-ng-if=\"thread.title\" ng-click=\"ui.minimized = !ui.minimized\">\n        <i class=\"fa fa-circle t-chat-color-green\"></i>&nbsp;&nbsp;{{ thread.title }}\n      </div>\n    </div>\n    <div class=\"panel-content\" data-ng-show=\"!ui.minimized\">\n      <div class=\"panel-body\"></div>\n      <div class=\"panel-footer\">\n        <input type=\"text\" class=\"form-control\" name=\"chat\" placeholder=\"Send a message.\" link-focus=\"ui.active\" ng-focus=\"focus()\" ng-blur=\"blur()\">\n      </div>\n    </div>\n  </div>\n</div>");
+angular.module("tChat").run(["$templateCache", function($templateCache) {$templateCache.put("/src/partials/t-chat-messages.html","<ul class=\"list-messages list-unstyled\">\n    <li class=\"list-item-message\" data-mid=\"{{ message.mid }}\" ng-repeat=\"message in messages\">\n        {{ message.text }} \n        <span class=\"text-muted\">{{ message.timestamp | date:\'short\' }}</span>\n    </li>\n</ul>");
+$templateCache.put("/src/partials/t-chat-thread.html","<div class=\"col-xs-4 panel-thread-container\" data-ng-class=\"{\n    \'panel-container-minimized\': ui.minimized == 1\n  }\">\n  <div class=\"panel panel-thread panel-thread-{{ thread.type }} panel-default\" data-ng-class=\"{\n      \'panel-success\': ui.highlighted,\n    }\" data-tid=\"{{ thread.tid }}\">\n    <div class=\"panel-heading\">\n      <div class=\"panel-heading-buttons pull-right\">\n        <div class=\"btn-group\" data-dropdown>\n          <button type=\"button\" class=\"btn btn-xs btn-default btn-actions dropdown-toggle\" id=\"t-chat-thread-settings-{{ thread.tid }}\" \n          data-toggle=\"dropdown\">\n            <i class=\"fa fa-cog\"></i>\n          </button>\n          <ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"t-chat-thread-settings-{{ thread.tid }}\">\n            <li role=\"presentation\">\n              <a role=\"menuitem\" tabindex=\"-1\" href=\"#\">\n                <i class=\"fa fa-fw fa-user\"></i> Add more people\n              </a>\n            </li>\n            <li role=\"presentation\" data-ng-if=\"thread.type === \'multi\'\">\n              <a role=\"menuitem\" tabindex=\"-1\" href=\"#\">\n                <i class=\"fa fa-fw fa-power-off\"></i> Leave\n              </a>\n            </li>\n          </ul>\n<!--      <button type=\"button\" class=\"btn btn-xs btn-default btn-resize\" \n            data-ng-click=\"ui.minimized = !ui.minimized\">\n            <i class=\"fa\" data-ng-class=\"{ \n              \'fa-minus\': ui.minimized == 0,\n              \'fa-plus\': ui.minimized == 1 }\">\n            </i>\n          </button> -->\n          <button type=\"button\" class=\"btn btn-xs btn-default btn-close\" data-ng-click=\"close()\">\n            <i class=\"fa fa-remove\"></i>\n          </button>\n        </div>\n      </div>  \n      <div class=\"panel-title\" data-ng-if=\"thread.title\" ng-click=\"ui.minimized = !ui.minimized\">\n        <i class=\"fa fa-circle t-chat-color-green\"></i>&nbsp;&nbsp;{{ thread.title }}\n      </div>\n    </div>\n    <div class=\"panel-content\" data-ng-show=\"!ui.minimized\">\n      <div class=\"panel-body\">\n        <t-chat-messages data-thread=\"thread\" data-messages=\"messages\"></t-chat-messages>\n      </div>\n      <div class=\"panel-footer\">\n        <input type=\"text\" class=\"form-control\" name=\"chat\" placeholder=\"Send a message.\" ng-model=\"ui.chat\" link-focus=\"ui.active\" ng-focus=\"focus()\" ng-blur=\"blur()\" ng-keyup=\"onKeyup($event)\" tabindex=\"{{ $parent.visibleThreadCount - $parent.$index }}\">\n      </div>\n    </div>\n  </div>\n</div>");
 $templateCache.put("/src/partials/t-chat-threads.html","<div class=\"col-xs-8\">\n  <div class=\"container-threads row\">\n    <div data-t-chat-thread\n         data-ng-repeat=\"t in threads() | reverse | limitTo:visibleThreadCount | reverse track by t.tid \"\n         data-thread=\"t\"\n         data-tid=\"{{ t.tid }}\">\n    </div>\n  </div>\n</div>");
 $templateCache.put("/src/partials/t-chat-widget.html","<div class=\"col-xs-4 panel-chat-widget-container\">\n  <div class=\"panel panel-default panel-chat-widget\">\n    <div class=\"panel-heading\">\n      <div class=\"panel-title\">\n        Teamie Chat <i class=\"fa fa-circle t-chat-color-green\"></i>\n      </div>\n    </div>\n    <div class=\"panel-body\">\n      <tabset justified=\"true\">\n        <tab ng-controller=\"UserListController\">\n          <tab-heading><i class=\"fa fa-user\"></i>&nbsp;&nbsp;People</tab-heading>\n          <div class=\"search-user-container input-group\">\n            <div class=\"input-group-addon\"><i class=\"fa fa-search\"></i></div>\n            <input type=\"search\" class=\"form-control input-sm search-user\" placeholder=\"Eg. John Doe\" \n            ng-model=\"data.search\"/>\n          </div>\n          <div class=\"list-people list-group\">\n            <a href=\"\" ng-click=\"chat(user)\" ng-repeat=\"user in users | filter:data.search\" class=\"list-group-item\" \n            data-uid=\"{{ user.uid }}\">\n              <i class=\"fa fa-circle t-chat-color-green\"></i>&nbsp;&nbsp;{{ user.name }} <i class=\"fa fa-comment\" ng-if=\"haveOpenThread(user)\"></i>\n            </a>\n          </div>\n        </tab>\n        <tab ng-controller=\"GroupListController\">\n          <tab-heading><i class=\"fa fa-group\"></i>&nbsp;&nbsp;Groups</tab-heading>\n          <div class=\"input-group search-group-container\">\n            <div class=\"input-group-addon\"><i class=\"fa fa-search\"></i></div>\n            <input type=\"search\" class=\"form-control input-sm\" placeholder=\"Eg. Some class\" \n            ng-model=\"data.search\"/>\n          </div>\n          <div class=\"list-user-groups list-group\">\n            <a href=\"\" ng-repeat=\"group in groups | filter:data.search\" class=\"list-group-item\" ng-click=\"chat(group)\"\n            data-uid=\"{{ group.gid }}\">\n              <i class=\"fa fa-circle t-chat-color-grey\"></i>&nbsp;&nbsp;{{ group.name }} <i class=\"fa fa-comment\" ng-if=\"haveOpenThread(group)\"></i>\n            </a>\n          </div>\n        </tab>\n<!--    <tab ng-controller=\"ThreadArchiveController\">\n          <tab-heading><i class=\"fa fa-hdd-o\"></i>&nbsp;&nbsp;Archive</tab-heading>\n          <div class=\"list-archived-threads list-group\">\n            <a href=\"\" ng-repeat=\"thread in threads | filter:data.search\" class=\"list-group-item\" \n            data-uid=\"{{ group.gid }}\">\n              <h4 class=\"list-group-item-heading\">{{ thread.title }}</h4>\n              <p class=\"text-muted list-group-item-text\">{{ thread.lastMessage }}</p>\n            </a>\n          </div>\n        </tab> -->\n        <!-- <tab heading=\"Notifications\" ng-controller=\"NotificationsController\"></tab> -->\n      </tabset>\n    </div>\n  </div>\n</div>");}]);
