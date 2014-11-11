@@ -3,7 +3,7 @@ angular.module('tChat').directive('tChatMessages', [
 
     'use strict';
 
-    function postLink(scope, iElement, iAttrs) {
+    function postLink(scope, iElement) {
       if (!scope.messages) {
         throw new Error('Cannot find messages in scope to render.');
       }

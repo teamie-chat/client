@@ -41,7 +41,7 @@
       .pipe(plugins.jshint.reporter('fail'));
   });
 
-  gulp.task('reserve', function() {
+  gulp.task('reserve', [ 'lint:soft', 'cs' ], function() {
     gulp.src(filesToWatch)
       .pipe(plugins.connect.reload());
   });

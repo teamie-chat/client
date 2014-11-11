@@ -77,7 +77,8 @@ angular.module('tChat').controller('ThreadController', [ '$scope', '$log',
     };
 
     ThreadService.on('resetActiveThread', onActiveThreadReset);
-    ThreadService.on('thread.' + $scope.thread.tid + '.message', onMessageQueued);
+    ThreadService.on('thread.' + $scope.thread.tid + '.message',
+      onMessageQueued);
 
     $scope.$on('$destroy', function() {
       ThreadService.off('activeThread', onActiveThreadReset);
